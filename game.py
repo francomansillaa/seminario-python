@@ -12,11 +12,35 @@ max_fallos = 10
 guessed_letters = []
 # contador de fallos
 fallos = 0
+# para armar la palabra segun la dificultad
+palabra = []
 
 print("¡Bienvenido al juego de adivinanzas!")
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
 
-word_displayed = "_" * len(secret_word)
+# Solicitar al usuario que elija la dificultad
+print("banca primero elegi la dificultad")
+while True:
+    dificultad = input("Ingrese qué dificultad desea: facil, medio o dificil: ").lower()
+    if dificultad in ["facil", "medio", "dificil"]:
+        print(f"Has elegido la dificultad {dificultad}.")
+        if dificultad == "facil":
+            for letter in secret_word:
+                if letter in "aeioóu":
+                    palabra.append(letter)
+                else:
+                    palabra.append("_")
+            guessed_letters = ["a", "e", "i", "o", "ó", "u"]
+            word_displayed = "".join(palabra)
+        elif dificultad == "medio":
+            guessed_letters = [secret_word[0], secret_word[-1]]
+            word_displayed = secret_word[0] + "_" * (len(secret_word) - 2) + secret_word[-1]
+        else:
+            word_displayed = "_" * len(secret_word)
+        break
+    else:
+        print("no coincide con ninguna de las opciones que le dimos por favor vuelva a intentar")
+
 # Mostrarla palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
@@ -60,6 +84,10 @@ while fallos < max_fallos:
     # Verificar si se ha adivinado la palabra completa
     if word_displayed == secret_word:
         print(f"¡Felicidades! Has adivinado la palabra secreta: {secret_word}")
+        if fallos == 1:
+            print(f"con un fallo")
+        else:
+            print(f"con {fallos} fallos")
         break
 else:
         print(f"¡Oh no! Has fallado {max_fallos} veces.")
