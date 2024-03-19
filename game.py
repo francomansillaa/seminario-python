@@ -33,7 +33,6 @@ while True:
             guessed_letters = ["a", "e", "i", "o", "ó", "u"]
             word_displayed = "".join(palabra)
         elif dificultad == "medio":
-            guessed_letters = [secret_word[0], secret_word[-1]]
             word_displayed = secret_word[0] + "_" * (len(secret_word) - 2) + secret_word[-1]
         else:
             word_displayed = "_" * len(secret_word)
@@ -78,14 +77,18 @@ while fallos < max_fallos:
             letters.append(letter)
         else:
             letters.append("_")
-        
+    if dificultad == "medio":
+        letters.pop(0)
+        letters.pop(-1)
+        letters.insert(0, secret_word[0])
+        letters.append(secret_word[-1])
     word_displayed = "".join(letters)
     print(f"Palabra: {word_displayed}")
     # Verificar si se ha adivinado la palabra completa
     if word_displayed == secret_word:
         print(f"¡Felicidades! Has adivinado la palabra secreta: {secret_word}")
         if fallos == 1:
-            print(f"con un fallo")
+            print("con un fallo")
         else:
             print(f"con {fallos} fallos")
         break
