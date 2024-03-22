@@ -33,6 +33,17 @@ while True:
             guessed_letters = ["a", "e", "i", "o", "ó", "u"]
             word_displayed = "".join(palabra)
         elif dificultad == "medio":
+            primera_letra = 0
+            ultima_letra = 0
+            for letter in secret_word:
+                if secret_word[0] == letter:
+                    primera_letra += 1
+                if secret_word[-1] == letter:
+                    ultima_letra += 1
+            if primera_letra == 1:
+                guessed_letters.append(secret_word[0])
+            if ultima_letra == 1:
+                guessed_letters.append(secret_word(-1))
             word_displayed = secret_word[0] + "_" * (len(secret_word) - 2) + secret_word[-1]
         else:
             word_displayed = "_" * len(secret_word)
